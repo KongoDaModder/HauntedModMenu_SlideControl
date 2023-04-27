@@ -1,0 +1,52 @@
+using System;
+using System.ComponentModel;
+using BepInEx;
+using BepInEx.Configuration;
+using GorillaLocomotion;
+using Utilla;
+
+namespace SpaceMonke
+{
+	// Token: 0x02000002 RID: 2
+	[Description("HauntedModMenu")]
+	[BepInPlugin("org.legoandmars.gorillatag.slidecontrol", "SlideControl", "1.2.3")]
+	[BepInDependency("org.legoandmars.gorillatag.utilla", "1.5.0")]
+	[ModdedGamemode]
+	public class SpaceMonke : BaseUnityPlugin
+	{
+		// Token: 0x06000001 RID: 1
+		private void OnEnable()
+		{
+			Player.Instance.slideControl = 5f;
+		}
+
+		// Token: 0x06000002 RID: 2
+		private void OnDisable()
+		{
+			Player.Instance.slideControl = 0f;
+		}
+
+		// Token: 0x06000003 RID: 3
+		[ModdedGamemodeJoin]
+		private void RoomJoined()
+		{
+			SpaceMonke.allowSlideControl = true;
+		}
+
+		// Token: 0x06000004 RID: 4
+		[ModdedGamemodeLeave]
+		private void RoomLeft()
+		{
+			SpaceMonke.allowSlideControl = false;
+		}
+
+		// Token: 0x04000002 RID: 2
+		public static ConfigEntry<float> multiplier;
+
+		// Token: 0x04000009 RID: 9
+		public static bool flying;
+
+		// Token: 0x0400000D RID: 13
+		public static bool allowSlideControl;
+	}
+}
